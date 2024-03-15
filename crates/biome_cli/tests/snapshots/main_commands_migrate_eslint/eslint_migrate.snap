@@ -1,0 +1,140 @@
+---
+source: crates/biome_cli/tests/snap_test.rs
+expression: content
+---
+## `biome.json`
+
+```json
+{ "linter": { "enabled": true } }
+```
+
+## `./.eslintrc.json`
+
+```json
+{
+        "ignore_patterns": ["**/*.test.js"],
+        "globals": [
+            "var1": "writable",
+            "var2": "readonly"
+        ],
+        "rules": {
+            "eqeqeq": "warn",
+            "no-eval": 1
+            "no-extra-label": ["error"]
+        },
+        "overrides": [{
+            "files": ["bin/*.js", "lib/*.js"],
+            "excludedFiles": "*.test.js",
+            "rules": {
+                "eqeqeq": ["off"]
+            }
+        }],
+        "unknownField": "ignored"
+    }
+```
+
+# Emitted Messages
+
+```block
+./.eslintrc.json parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `:`
+  
+  i Remove :
+  
+
+```
+
+```block
+./.eslintrc.json parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `"writable"`
+  
+  i Remove "writable"
+  
+
+```
+
+```block
+./.eslintrc.json parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `:`
+  
+  i Remove :
+  
+
+```
+
+```block
+./.eslintrc.json parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `"readonly"`
+  
+  i Remove "readonly"
+  
+
+```
+
+```block
+./.eslintrc.json parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `"no-extra-label"`
+  
+  i Remove "no-extra-label"
+  
+
+```
+
+```block
+./.eslintrc.json:3:20 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × globals has an incorrect type, expected an object, but received an array.
+  
+    1 │ {
+    2 │         "ignore_patterns": ["**/*.test.js"],
+  > 3 │         "globals": [
+      │                    ^
+  > 4 │             "var1": "writable",
+  > 5 │             "var2": "readonly"
+  > 6 │         ],
+      │         ^
+    7 │         "rules": {
+    8 │             "eqeqeq": "warn",
+  
+
+```
+
+```block
+biome.json migrate ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Configuration file can be updated.
+  
+    1    │ - {·"linter":·{·"enabled":·true·}·}
+       1 │ + {
+       2 │ + → "linter":·{
+       3 │ + → → "enabled":·true,
+       4 │ + → → "rules":·{
+       5 │ + → → → "complexity":·{·"noUselessLabel":·"error"·},
+       6 │ + → → → "security":·{·"noGlobalEval":·"warn"·},
+       7 │ + → → → "suspicious":·{·"noDoubleEquals":·"warn"·}
+       8 │ + → → }
+       9 │ + → },
+      10 │ + → "overrides":·[
+      11 │ + → → {
+      12 │ + → → → "ignore":·["bin/*.js",·"lib/*.js"],
+      13 │ + → → → "linter":·{·"rules":·{·"suspicious":·{·"noDoubleEquals":·"off"·}·}·}
+      14 │ + → → }
+      15 │ + → ]
+      16 │ + }
+      17 │ + 
+  
+
+```
+
+```block
+Run the command with the option --write to apply the changes.
+```
+
+```block
+Run the command with the option --include-inspired to also migrate inspired rules.
+```

@@ -347,6 +347,15 @@ pub enum MigrateSubCommand {
     /// It attempts to find the files `.prettierrc`/`prettier.json` and `.prettierignore`, and map the Prettier's configuration into Biome's configuration file.
     #[bpaf(command)]
     Prettier,
+    #[bpaf(command)]
+    Eslint {
+        /// Includes rules inspired from an eslint rule in the migration
+        #[bpaf(long("include-inspired"))]
+        include_inspired: bool,
+        /// Includes nursery rules in the migration
+        #[bpaf(long("include-nursery"))]
+        include_nursery: bool,
+    },
 }
 
 impl MigrateSubCommand {
